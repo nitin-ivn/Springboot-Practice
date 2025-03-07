@@ -10,16 +10,6 @@ public class Laptop {
 
     @Id
     private int lid;
-    @ManyToOne
-    private Alien alien;
-
-    public Alien getAlien() {
-        return alien;
-    }
-
-    public void setAlien(Alien alien) {
-        this.alien = alien;
-    }
 
     public int getLid() {
         return lid;

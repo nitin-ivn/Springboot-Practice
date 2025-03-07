@@ -1,11 +1,13 @@
 package org.example;
 
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -24,6 +26,18 @@ public class Main {
         l2.setModel("R1");
         l2.setRam(16);
 
+        Laptop l3 = new Laptop();
+        l3.setLid(3);
+        l3.setBrand("ASUS");
+        l3.setModel("Rog");
+        l3.setRam(8);
+
+        Laptop l4 = new Laptop();
+        l4.setLid(4);
+        l4.setBrand("HP");
+        l4.setModel("Pavillion");
+        l4.setRam(32);
+
 
         Alien a1 = new Alien();
         a1.setAid(102);
@@ -31,8 +45,7 @@ public class Main {
         a1.setTech("Java");
         a1.setLaptops(Arrays.asList(l1,l2));
 
-        l1.setAlien(a1);
-        l2.setAlien(a1);
+        a1.setLaptops(Arrays.asList(l1,l2));
 
 
 //        Student s1 = new Student();
@@ -51,7 +64,7 @@ public class Main {
 
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(org.example.Laptop.class)
-                .addAnnotatedClass(org.example.Alien.class)
+//                .addAnnotatedClass(org.example.Alien.class)
                 .configure()
                 .buildSessionFactory();
         Session session = sf.openSession();
@@ -78,13 +91,29 @@ public class Main {
 //        session.remove(s4);
 //        transaction.commit();
 
-        Transaction transaction = session.beginTransaction();
+//        Transaction transaction = session.beginTransaction();
+//
+////        session.persist(l1);
+////        session.persist(l2);
+////        session.persist(a1);
+//
+//        session.persist(l3);
+//        session.persist(l4);
+//
+//        transaction.commit();
 
-        session.persist(l1);
-        session.persist(l2);
-        session.persist(a1);
+//        Query query = session.createQuery("from Laptop where ram=16");
+//        List<Laptop> laptops = query.getResultList();
 
-        transaction.commit();
+        String brand = "Asus";
+        Query query = session.createQuery("select brand, model from Laptop where brand like ?1");
+        query.setParameter(1,brand);
+        List<Object[]> laptops = query.getResultList();
+
+        for(Object[] data : laptops)
+            System.out.println((String)data[0] + " " + (String) data[1]);
+
+        System.out.println(laptops);
 
         session.close();
         sf.close();
