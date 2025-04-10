@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="alien" class="org.example.Alien" scope="prototype" autowire="byName">
+
+        <property name="age" value="22"></property>
+        <property name="com">
+            <bean id="com" class="org.example.Laptop" primary="true"></bean>
+        </property>
+
+
+<!--        normal sequence             -->
+<!--        <constructor-arg value="21" />-->
+<!--        <constructor-arg ref="lap1" />-->
+
+<!--        for indexing (Starts with 0)-->
+<!--        <constructor-arg index="1" ref="lap1" />-->
+<!--        <constructor-arg index="0" value="21" />-->
+
+        <!--       Name but need additional property in alien class-->
+<!--        <constructor-arg name="com" ref="lap1" />-->
+<!--        <constructor-arg name="age" value="21" />-->
+
+    </bean>
+
+    <bean id="des1" class="org.example.Desktop" lazy-init="true"></bean>
+
+</beans>
